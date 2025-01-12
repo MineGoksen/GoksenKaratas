@@ -106,9 +106,9 @@ After integrating all components together, the final loss is formulated as the f
 
 The paper conducts several experiments to evaluate the effectiveness of the proposed framework. The authors state that they reproduced the original CAER approaches from scratch to ensure a fair comparison. In this section, they report using the training setups from the original papers directly.
 
-At this point, we assume that they reproduced the architecture, integrated the proposed framework with this architecture, and then started training using the aforementioned setup. However, it is unclear whether they mean training the CAER models with the stated setup first, then wrapping the framework around the trained models and further train the combined architecture, using unreported training parameters.
+At first, we assumed that they reproduced the architecture, integrated the proposed framework with this architecture, and then started training using the aforementioned setup. However, it is unclear whether they mean training the CAER models with the stated setup first, then wrapping the framework around the trained models and further train the combined architecture, using unreported training parameters.
 
-Throughout our experiments, we aim to clarify which interpretation is correct. Additionally, we attempted to contact the corresponding author for clarification on this matter. If they provide further details about the setup, we will adjust our experimental design accordingly. For now, we proceed with our current assumption.
+Throughout our experiments, we aimed to clarify which interpretation is correct. Additionally, we attempted to contact the corresponding author for clarification on this matter. We will discuss the results and the assumptions at the conclusion section.
 
 # 3. Experiments and results
 
@@ -231,7 +231,7 @@ Based on our preliminary results, the architecture demonstrated learning capabil
 
 ### 3.3.1 Results for EMOT-Net Model
 
-Unlike the CAER dataset, which involves single-label classification, the Emotic dataset contains multi-labeled data. To accommodate this, we utilized a discrete loss function as specified in the original implementation, along with a sigmoid activation function, which is more appropriate for multi-label classification tasks. In this experiment, we incorporated the EMOT-Net model as a factual branch within the Counterfactual Emotion Inference (CLEF) framework. Training parameteres are: 
+Unlike the CAER dataset, which involves single-label classification, the Emotic dataset contains multi-labeled data. To accommodate this, we utilized a discrete loss function as specified in the original implementation, along with a sigmoid activation function, which is more appropriate for multi-label classification tasks. In this experiment, we incorporated the EMOT-Net model, utilizing and modifying the implementation[18], as a factual branch within the Counterfactual Emotion Inference (CLEF) framework. Training parameteres are: 
 Obtained scores for EMOT-Net model and with CLEF model with Emotic dataset are give below:
 
 1. Batch Size = 32,
@@ -244,7 +244,7 @@ Obtained scores for EMOT-Net model and with CLEF model with Emotic dataset are g
 | **Methods**                              | **mAP (%)** |
 |---------------------------------------   |-------------|
 | EMOT-Net(Baseline)                       | 27.01       |
-| EMOT-Net+CLEF(Our Implementation)        | 27.33       |
+| EMOT-Net+CLEF(Our Implementation)        | 26.33       |
 | EMOT-Net+CLEF(Paper Implementation)      | 31.67       |
 
 
@@ -252,7 +252,7 @@ Obtained scores for EMOT-Net model and with CLEF model with Emotic dataset are g
 
 # 4. Conclusion
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+Throughout the project, we aimed at reproducing two experimental setups of the original paper. The main challenge was the lack of technical details about the experimental setup. While we report a limited number of results due to hardware restrictions, we have conducted several toy experiments during the implementations as well. We can safely verify that the proposed architecture indeed improves model performance. However, since the training parameters are not specified and, according to our understanding, some matters could benefit from some further explanations, we were unable to reproduce the exact results. Nevertheless, we believe that the results we obtained on the CAER-S dataset align with the original results and the gap originates from the specific setup, mostly number of epochs. We suspect from the number of epochs since we observed that the model's validation accuracy keeps increasing as the number of epochs increase, with some instabilities at higher epochs. We were unable to train the model further, due to limited hardware we had. The results for the EMOT-NET model is a little different. We reproduced the original baseline results using the original implementation directly. When we trained the model as a part of the proposed framework, we observed an unstable training, although the model started with a higher score than the baseline model. The validation loss during the training were decreasing with close no none improvements in the reported metric (mean average precision).  There might be a number of reasons behind this situation. First, there might be a minor bug regarding the handling of multilabel samples. This is a possibility since the model trained on CAER-S dataset does not have such instabilities. The second possibility is that the baseline model uses a loss consisting of both categorical and continuous predictions, while we only use the categorical loss alongside KL Divergence. There is again, an unclear statement on our end. The CLEF paper defines the EMOTIC dataset as containing categorical samples only. Therefore, we did not include the continuous loss in our implementation. After obtaining the unstable training setup, that shows no meaningful increase on map, we believe incorporating the hybrid loss could result in a better setup.
 
 # 5. References
 
@@ -289,6 +289,8 @@ Obtained scores for EMOT-Net model and with CLEF model with Emotic dataset are g
 [16] B. Zhou, A. Khosla, A. Lapedriza, A. Torralba, and A. Oliva, “Places: An image database for deep scene understanding,” CoRR, vol. abs/1610.02055, 2015.
 
 [17] A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Imagenet classifi- cation with deep convolutional neural networks,” in Advances in neural information processing systems, 2012, pp. 1097–1105.
+
+[18] https://github.com/Tandon-A/emotic
 
 # Contact
 
