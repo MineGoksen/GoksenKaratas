@@ -155,8 +155,8 @@ The directory structure of the repository is as below;
 │   ├── base/
 │   │   ├── base_model.py
 │   ├── coords/
-│   │   ├── test_face_coords.py
-│   │   ├── train_face_coords.py
+│   │   ├── test_face_coords.json
+│   │   ├── train_face_coords.json
 │   ├── data_loader/
 │   │   ├── data_loaders.py
 │   ├── model/
@@ -166,11 +166,14 @@ The directory structure of the repository is as below;
 │   │   ├── model.py
 │   │   ├── prepare_models.py
 │   │   ├── resnet152_places365.py
+│   ├── trained_models/
+│   │   ├── trained_models.py
 │   ├── trainer/
 │   │   ├── trainer.py
 │   ├── train.py
 │   ├── test.py
-│   ├── requirements.txt
+├── requirements.txt
+├── README.md
 
 
 ```
